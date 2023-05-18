@@ -19,8 +19,9 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/ssl_certif.crt -keyout /etc/ngi
 #-keyout /etc/nginx/ssl/ssl_key.key: Spécifie le chemin de sortie où la clé privée correspondante au certificat sera enregistrée. Dans ce cas, la clé sera enregistrée sous /etc/nginx/ssl/ssl_key.key.
 #-subj "/C=FR/ST=IDF/L=Paris/O=School/OU=42Paris/CN=cwybellotwdebotte.42.fr": Spécifie les informations du sujet du certificat, telles que le pays (C), l'État (ST), la ville (L), l'organisation (O), l'unité organisationnelle (OU) et le nom commun (CN). Dans cet exemple, le certificat sera émis pour le domaine ybellot.42.fr avec d'autres informations d'identification spécifiées.
 
-RUN mkdir -p /var/www/html && chmod -R 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+RUN mkdir -p /var/www/html
+RUN chmod -R 755 /var/www/html #for root
+RUN chown -R www-data:www-data /var/www/html #for main user
 
 EXPOSE 443
 
