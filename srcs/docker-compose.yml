@@ -17,8 +17,8 @@ services:
 
 
   nginx:
-    depends_on:
-      - wordpress
+    #depends_on:
+    #  - wordpress
     container_name: nginx
     build: ./requirements/nginx
     image: nginx
@@ -31,20 +31,20 @@ services:
       - wp-data:/var/www/html
     restart: always
 
-  wordpress:
-    container_name: wordpress
-    depends_on:
-      - mariadb
-    build: ./requirements/wordpress
-    image: wordpress
-    expose:
-      - "9000"
-    env_file: .env
-    networks:
-      - inception
-    volumes:
-      wp-data:/var/lib/mysql
-    restart: always
+#  wordpress:
+#    container_name: wordpress
+#    depends_on:
+#      - mariadb
+#    build: ./requirements/wordpress
+#    image: wordpress
+#    expose:
+#      - "9000"
+#    env_file: .env
+#    networks:
+#      - inception
+#    volumes:
+#      wp-data:/var/lib/mysql
+#    restart: always
 
 ##############  Networks  #############
 networks:
