@@ -16,20 +16,20 @@ services:
     restart: always
 
 
-  nginx:
+ #nginx:
     #depends_on:
     #  - wordpress
-    container_name: nginx
-    build: ./requirements/nginx
-    image: nginx
-    ports:
-      - "443:443"
-    env_file: .env
-    networks:
-      - inception
-    volumes:
-      - wp-data:/var/www/html
-    restart: always
+#    container_name: nginx
+#    build: ./requirements/nginx
+#    image: nginx
+#    ports:
+#      - "443:443"
+#    env_file: .env
+#    networks:
+#      - inception
+#    volumes:
+#      - wp-data:/var/www/html
+#    restart: always
 
 #  wordpress:
 #    container_name: wordpress
