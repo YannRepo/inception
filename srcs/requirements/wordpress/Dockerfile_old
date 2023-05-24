@@ -16,5 +16,6 @@ RUN chown -R root:root /var/www/wordpress
 
 EXPOSE 9000
 
+CMD["echo salut"]
 
 
