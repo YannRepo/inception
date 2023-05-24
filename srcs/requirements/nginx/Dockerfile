@@ -1,27 +1,20 @@
 FROM debian:buster
 
-RUN echo "lancement dockerfile nginx"
-RUN apt-get update -y
-RUN apt-get upgrade -y
+RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y nginx openssl
 
-COPY conf/nginx.conf /etc/nginx/conf.d/nginx.conf
-RUN chmod -R 755 /etc/nginx/conf.d/nginx.conf
+COPY conf/inception.conf /etc/nginx/conf.d/inception.conf
+RUN chmod -R 755 /etc/nginx/conf.d/inception.conf
 
 RUN mkdir -p /etc/nginx/ssl
+# Create the key and the certifcate for TSL protocol
+# -x509 refers to the certificate's type
+# -out and -keyout parameters refers to where the certificate will be saved
+# -subj refers to the command response (Country, STate, Locality, Organization name, Organizational Unit name, Common Name (we can use our name))
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/ssl_certif.crt -keyout /etc/nginx/ssl/ssl_key.key -subj "/C=FR/ST=IDF/L=Paris/O=School/OU=42Paris/CN=ybellot.42.fr"
-#Explication generation certificat
-#RUN: C'est une directive dans un Dockerfile qui permet d'exécuter une commande pendant la construction de l'image Docker.
-#openssl req: C'est la commande OpenSSL pour générer une requête de certificat.
-#-x509: Cette option indique à OpenSSL de générer un certificat auto-signé plutôt qu'une demande de signature de certificat (CSR).
-#-nodes: Cette option indique à OpenSSL de ne pas chiffrer la clé privée générée.
-#-out /etc/nginx/ssl/ssl_certif.crt: Spécifie le chemin de sortie où le certificat SSL auto-signé sera enregistré. Dans ce cas, le certificat sera enregistré sous /etc/nginx/ssl/ssl_certif.crt.
-#-keyout /etc/nginx/ssl/ssl_key.key: Spécifie le chemin de sortie où la clé privée correspondante au certificat sera enregistrée. Dans ce cas, la clé sera enregistrée sous /etc/nginx/ssl/ssl_key.key.
-#-subj "/C=FR/ST=IDF/L=Paris/O=School/OU=42Paris/CN=cwybellotwdebotte.42.fr": Spécifie les informations du sujet du certificat, telles que le pays (C), l'État (ST), la ville (L), l'organisation (O), l'unité organisationnelle (OU) et le nom commun (CN). Dans cet exemple, le certificat sera émis pour le domaine ybellot.42.fr avec d'autres informations d'identification spécifiées.
 
-RUN mkdir -p /var/www/html
-RUN chmod -R 755 /var/www/html #for root
-RUN chown -R www-data:www-data /var/www/html #for main user
+RUN mkdir -p /var/www/html && chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 

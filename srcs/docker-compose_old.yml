@@ -1,11 +1,25 @@
-# https://docs.docker.com/compose/compose-file/compose-file-v3/
 version: "3.3"
 
+##############  Services  #############
 services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb:mariadb
+    ports:
+      - "3306"
+    env_file: .env
+    networks:
+      - inception
+    volumes:
+      - sql-data:/var/lib/mysql
+    restart: always
+
+
   nginx:
-    container_name: nginx
     depends_on:
       - wordpress
+    container_name: nginx
     build: ./requirements/nginx
     image: nginx
     ports:
@@ -18,39 +32,26 @@ services:
     restart: always
 
   wordpress:
+    container_name: wordpress
     depends_on:
       - mariadb
-    container_name: wordpress
     build: ./requirements/wordpress
-    image: wordpress
+    image: wordpress:wordpress
     expose:
       - "9000"
     env_file: .env
     networks:
       - inception
     volumes:
-      - wp-data:/var/www/html # Path where our wordpress files are present
+      - wp-data:/var/lib/mysql
     restart: always
 
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb
-    image: mariadb
-    expose:
-      - "3306"
-    env_file: .env
-    networks:
-      - inception
-    volumes:
-      - sql-data:/var/lib/mysql
-    restart: always
-
+##############  Networks  #############
 networks:
   inception:
     driver: bridge
 
-# xavki: DOCKER-COMPOSE - 4. LES VOLUMES PERSISTANTS
-# https://www.youtube.com/watch?v=HUXXKYA7j0s
+##############  Volumes  #############
 volumes:
   wp-data:
     driver: local

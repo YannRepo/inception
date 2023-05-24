@@ -1,10 +1,6 @@
 all:	up
 
 up:
-	sudo rm -rf /home/ybellot/data/mysql/
-	sudo rm -rf /home/ybellot/data/wordpress/
-	sudo mkdir /home/ybellot/data/mysql
-	sudo mkdir /home/ybellot/data/wordpress
 	docker-compose -f ./srcs/docker-compose.yml up --build -d
 
 rmmdb:
@@ -31,6 +27,8 @@ prune: stop
 	docker volume rm srcs_wp-data -f
 	sudo rm -rf /home/ybellot/data/mysql/
 	sudo rm -rf /home/ybellot/data/wordpress/
+	sudo mkdir /home/ybellot/data/mysql
+	sudo mkdir /home/ybellot/data/wordpress
 
 re: prune ls up
 
