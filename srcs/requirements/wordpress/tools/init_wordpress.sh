@@ -31,7 +31,7 @@ if [ ! -f "wp-config.php" ]; then
 	echo "=> Done!"
 
 	echo "=> Installing wordpress..."
-	wp core install --url="wdebotte.42.fr" \
+	wp core install --url="ybellot.42.fr" \
 					--title="Inception" \
 					--admin_user=$WP_ADMIN_USERNAME \
 					--admin_password=$WP_ADMIN_PASSWORD \
