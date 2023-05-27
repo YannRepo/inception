@@ -7,7 +7,7 @@ RUN apt-get install -y mariadb-server mariadb-client
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY tools/set_mariadb.sh /tmp
 
-# Mariadb restart without
+# creation of folder for mariadb runtime files
 RUN mkdir /run/mysqld && chown -R mysql:root /run/mysqld
 
 # Give the script rights

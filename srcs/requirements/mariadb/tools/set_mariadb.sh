@@ -1,22 +1,15 @@
 #!/bin/sh
 
-echo "Check for \`mysql\` database..."
-# Create mysql database if not exists
+# Creation of mysql database if not existing (contain user list)
 if [ ! -d "/var/lib/mysql/mysql" ]; then
-	echo "=> mysql database doesn't exists, creating one!"
-
 	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm
 	chown -R mysql:mysql /var/lib/mysql
-
-	echo "=> Done!"
 fi
-echo "OK!"
 
-echo "Check for \`wordpress\` database..."
-# Check if the wordpress database is already created
+# Creation of wordpress database if not existing
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
-	echo "=> Creating wordpress database and basic user configuration..."
-
+	#script creation in a heredoc to include critical by env variable
+	#and avoid visibility
 	cat << EOF > /tmp/querys_database.sql
 USE mysql;
 FLUSH PRIVILEGES;
@@ -32,10 +25,6 @@ EOF
 	chmod 777 /tmp/querys_database.sql
 	mysqld --user=mysql --verbose --bootstrap < /tmp/querys_database.sql
 	rm -f /tmp/querys_database.sql
-
-	echo "=> Done!"
 fi
-echo "OK!"
-
-echo "Container now runnig mysqld."
+# Lauch deamon mysql
 exec mysqld
