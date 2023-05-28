@@ -35,7 +35,7 @@ services:
       - wordpress
     container_name: nginx
     build: ./requirements/nginx
-    image: nginx
+    image: nginx:nginx
     ports:
       - "443:443"
     env_file: .env
