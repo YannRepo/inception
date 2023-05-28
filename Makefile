@@ -1,7 +1,10 @@
 all:	up
 
 up:
-	docker-compose -f ./srcs/docker-compose.yml up --build -d
+	docker-compose -f ./srcs/docker-compose.yml up -d
+
+restart:
+	docker-compose -f ./srcs/docker-compose.yml restart
 
 rmmdb:
 	docker ps -aqf "name=mariadb" | xargs -r docker stop
