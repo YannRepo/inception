@@ -16,9 +16,9 @@ fi
 
 # Wordpress installation and add user (root and user). if wp-config.php exists, WP has already been installed
 if [ ! -f "wp-config.php" ]; then
-	wp config create --dbname=wordpress --dbuser=$SQL_USERNAME --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306 --path='/var/www/html' --allow-root
-	wp core install --url="ybellot.42.fr" --title="my_inception_website" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root
-	wp user create $WP_USERNAME $WP_EMAIL --user_pass=$WP_PASSWORD --allow-root
+	wp config create --dbname=wordpress --dbuser=$MDB_USER_NAME --dbpass=$MDB_USER_PASSWORD --dbhost=mariadb:3306 --path='/var/www/html' --allow-root
+	wp core install --url=$DOMAIN_NAME --title="my_inception_website" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root
+	wp user create $WP_USER_NAME $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --allow-root
 fi
 
 echo "Container now running php-fpm."
